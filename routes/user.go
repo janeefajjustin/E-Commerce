@@ -6,6 +6,7 @@ import (
 )
 
 func Routes(server *gin.Engine) {
-	server.POST("/signup", handler.Signup)
-	server.POST("/checkUserName/:username",handler.CheckUserName)
+	u := handler.UserHandler{}
+	server.POST("/user/signup", u.Signup)
+	server.POST("/user/checkusername/:username", u.CheckUserName)
 }

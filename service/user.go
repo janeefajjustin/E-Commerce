@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"net/mail"
 
 	"github.com/janeefajjustin/ecommerce/models"
 	"github.com/janeefajjustin/ecommerce/repo"
@@ -40,7 +39,6 @@ func (u UserService) SignupUser(user models.User) error {
 		return errors.New("Email ID already exists")
 	}
 
-
 	err = u.userRepo.SaveUser(user)
 	if err != nil {
 		return errors.New("can't save user")
@@ -77,10 +75,6 @@ func (u UserService) CheckEmailID(emailId string) error {
 	}
 	if count > 0 {
 		return errors.New("email id already exists")
-	}
-	 _, err = mail.ParseAddress(emailId)
-	 if err != nil {
-		return err
 	}
 	return nil
 }
