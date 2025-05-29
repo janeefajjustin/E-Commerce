@@ -17,8 +17,8 @@ func main() {
 	}
 	//step 3,4,5,6 : Initialize everything
 	userrepo := repo.NewUserRepo(DB)
-	userserver := service.NewUserService(*userrepo)
-	userhandler:= handler.NewUserHandler(*userserver)
+	userserver := service.NewUserService(userrepo)
+	userhandler:= handler.NewUserHandler(userserver)
 
 	//step 7: starting server
 	server := gin.Default()

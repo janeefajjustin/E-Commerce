@@ -14,7 +14,7 @@ func NewUserRepo(db *sql.DB) *UserRepo {
 	return &UserRepo{db: db}
 }
 
-func (u UserRepo) SaveUser(user models.User) error {
+func (u *UserRepo) SaveUser(user models.User) error {
 	//var usr models.User
 	query := `INSERT INTO users(username,password,phonenumber,email,firstname,middlename,lastname)
 	 VALUES($1,$2,$3,$4,$5,$,$7)`
@@ -28,7 +28,7 @@ func (u UserRepo) SaveUser(user models.User) error {
 
 }
 
-func (u UserRepo) CheckUniqueUserName(username string) (int, error) {
+func (u *UserRepo) CheckUniqueUserName(username string) (int, error) {
 	var count int
 	query := `SELECT COUNT(*) FROM users WHERE username = $1`
 	rows, err := u.db.Query(query, username)
@@ -40,7 +40,7 @@ func (u UserRepo) CheckUniqueUserName(username string) (int, error) {
 
 }
 
-func (u UserRepo) CheckUniquePhoneNumber(phonenumber int64) (int, error) {
+func (u *UserRepo) CheckUniquePhoneNumber(phonenumber int64) (int, error) {
 	var count int
 	query := `SELECT COUNT(*) FROM users WHERE phonenumber = $1`
 	rows, err := u.db.Query(query, phonenumber)
@@ -52,7 +52,7 @@ func (u UserRepo) CheckUniquePhoneNumber(phonenumber int64) (int, error) {
 
 }
 
-func (u UserRepo) CheckUniqueEmailID(emailId string) (int, error) {
+func (u *UserRepo) CheckUniqueEmailID(emailId string) (int, error) {
 	var count int
 	query := `SELECT COUNT(*) FROM users WHERE email = $1`
 	rows, err := u.db.Query(query, emailId)

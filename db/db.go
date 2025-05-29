@@ -42,6 +42,7 @@ func CreateTable() {
 
 func OpenDatabase() error {
 	var err error
+	// connectionstring:=fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=desable",)
 	DB, err = sql.Open("postgres", "user=postgres password=8976 dbname=Ecommerce sslmode=disable")
 	if err != nil {
 		return err

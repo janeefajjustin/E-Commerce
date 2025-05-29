@@ -12,11 +12,11 @@ type UserService struct {
 	userRepo *repo.UserRepo
 }
 
-func NewUserService(userRepo repo.UserRepo) *UserService {
-	return &UserService{userRepo: &userRepo}
+func NewUserService(userRepo *repo.UserRepo) *UserService {
+	return &UserService{userRepo: userRepo}
 }
 
-func (u UserService) SignupUser(user models.User) error {
+func (u *UserService) SignupUser(user models.User) error {
 
 	hashedPassword, err := utils.HashedPassword(user.Password)
 	if err != nil {
@@ -46,7 +46,7 @@ func (u UserService) SignupUser(user models.User) error {
 	return nil
 }
 
-func (u UserService) CheckUserName(username string) error {
+func (u *UserService) CheckUserName(username string) error {
 	count, err := u.userRepo.CheckUniqueUserName(username)
 	if err != nil {
 		return err
@@ -57,7 +57,7 @@ func (u UserService) CheckUserName(username string) error {
 	return nil
 }
 
-func (u UserService) CheckPhoneNumber(phonenumber int64) error {
+func (u *UserService) CheckPhoneNumber(phonenumber int64) error {
 	count, err := u.userRepo.CheckUniquePhoneNumber(phonenumber)
 	if err != nil {
 		return err
@@ -68,7 +68,7 @@ func (u UserService) CheckPhoneNumber(phonenumber int64) error {
 	return nil
 }
 
-func (u UserService) CheckEmailID(emailId string) error {
+func (u *UserService) CheckEmailID(emailId string) error {
 	count, err := u.userRepo.CheckUniqueEmailID(emailId)
 	if err != nil {
 		return err
