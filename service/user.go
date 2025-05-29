@@ -9,11 +9,11 @@ import (
 )
 
 type UserService struct {
-	userRepo repo.UserRepo
+	userRepo *repo.UserRepo
 }
 
-func NewUserService(userRepo repo.UserRepo) UserService {
-	return UserService{userRepo: userRepo}
+func NewUserService(userRepo repo.UserRepo) *UserService {
+	return &UserService{userRepo: &userRepo}
 }
 
 func (u UserService) SignupUser(user models.User) error {

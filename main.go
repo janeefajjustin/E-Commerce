@@ -11,15 +11,18 @@ import (
 
 func main() {
 	//step 1: No idea
-	DB := db.Initialize() //step 2 : Initialize DB
+	DB, err := db.Initialize() //step 2 : Initialize DB
+	if err != nil {
+		panic("db connection failed")
+	}
 	//step 3,4,5,6 : Initialize everything
 	userrepo := repo.NewUserRepo(DB)
-	userserver := service.NewUserService(userrepo)
-	_ = handler.NewUserHandler(userserver)
+	userserver := service.NewUserService(*userrepo)
+	userhandler:= handler.NewUserHandler(*userserver)
 
 	//step 7: starting server
 	server := gin.Default()
-	routes.Routes(server)
+	routes.Routes(userhandler,server)
 	server.Run("localhost:8080")
 	//step 8: gracefulshutdown
 }

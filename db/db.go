@@ -4,24 +4,26 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+
+	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
 
-func Initialize() *sql.DB{
+func Initialize() (*sql.DB, error) {
 	err := OpenDatabase()
 	fmt.Println("DB Initializing....")
 	if err != nil {
-		log.Printf("A new error %v", err)
+		return nil, err
 	}
 	//defer CloseDatabase()
-	fmt.Println("Done...")
-	return DB
+	fmt.Println("DB Initialized successfully")
+	return DB, nil
 }
 
 func CreateTable() {
 	createUserTable :=
-		`CREATE TABLE IF NOT EXISTS user(
+		`CREATE TABLE IF NOT EXISTS users(
      userid serial,
 	 username varchar(100) unique,
 	 password varchar(100),
@@ -37,7 +39,6 @@ func CreateTable() {
 		log.Printf("A new error %v", err)
 	}
 }
-
 
 func OpenDatabase() error {
 	var err error
@@ -61,4 +62,3 @@ func OpenDatabase() error {
 func CloseDatabase() error {
 	return DB.Close()
 }
-

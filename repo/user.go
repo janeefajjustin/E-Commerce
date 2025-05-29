@@ -10,13 +10,13 @@ type UserRepo struct {
 	db *sql.DB
 }
 
-func NewUserRepo(db *sql.DB) UserRepo {
-	return UserRepo{db: db}
+func NewUserRepo(db *sql.DB) *UserRepo {
+	return &UserRepo{db: db}
 }
 
 func (u UserRepo) SaveUser(user models.User) error {
 	//var usr models.User
-	query := `INSERT INTO user(username,password,phonenumber,email,firstname,middlename,lastname)
+	query := `INSERT INTO users(username,password,phonenumber,email,firstname,middlename,lastname)
 	 VALUES($1,$2,$3,$4,$5,$,$7)`
 
 	row := u.db.QueryRow(query, user.Username, user.Password, user.PhoneNumber, user.Email, user.FirstName, user.MiddleName, user.LastName)
@@ -30,7 +30,7 @@ func (u UserRepo) SaveUser(user models.User) error {
 
 func (u UserRepo) CheckUniqueUserName(username string) (int, error) {
 	var count int
-	query := `SELECT COUNT(*) FROM user WHERE username = $1`
+	query := `SELECT COUNT(*) FROM users WHERE username = $1`
 	rows, err := u.db.Query(query, username)
 	if err != nil {
 		return -1, err
@@ -42,7 +42,7 @@ func (u UserRepo) CheckUniqueUserName(username string) (int, error) {
 
 func (u UserRepo) CheckUniquePhoneNumber(phonenumber int64) (int, error) {
 	var count int
-	query := `SELECT COUNT(*) FROM user WHERE phonenumber = $1`
+	query := `SELECT COUNT(*) FROM users WHERE phonenumber = $1`
 	rows, err := u.db.Query(query, phonenumber)
 	if err != nil {
 		return -1, err
@@ -54,7 +54,7 @@ func (u UserRepo) CheckUniquePhoneNumber(phonenumber int64) (int, error) {
 
 func (u UserRepo) CheckUniqueEmailID(emailId string) (int, error) {
 	var count int
-	query := `SELECT COUNT(*) FROM user WHERE email = $1`
+	query := `SELECT COUNT(*) FROM users WHERE email = $1`
 	rows, err := u.db.Query(query, emailId)
 	if err != nil {
 		return -1, err
