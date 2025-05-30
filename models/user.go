@@ -4,7 +4,7 @@ type User struct{
 	UserID int64
 	Username string
 	Password string
-	PhoneNumber int64
+	PhoneNumber string
 	Email string
 	FirstName string
 	MiddleName string

@@ -27,12 +27,12 @@ func CreateTable() {
      userid serial,
 	 username varchar(100) unique,
 	 password varchar(100),
-	 phonenumber int64 unique,
+	 phonenumber varchar(20) unique,
 	 email varchar(100) unique,
 	 firstname varchar(100),
 	 middlename varchar(100),
 	 lastname varchar(100)
-	);`
+	)`
 
 	_, err := DB.Exec(createUserTable)
 	if err != nil {
