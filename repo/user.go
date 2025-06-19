@@ -2,7 +2,7 @@ package repo
 
 import (
 	"database/sql"
-	"fmt"
+	
 
 	"github.com/janeefajjustin/ecommerce/models"
 )
@@ -22,7 +22,7 @@ func (u *UserRepo) SaveUser(user models.User) error {
 
 	row := u.db.QueryRow(query, user.Username, user.Password, user.PhoneNumber, user.Email, user.FirstName, user.MiddleName, user.LastName)
 	if err := row.Err(); err != nil {
-		fmt.Println("error is from query")
+		
 		return err
 	}
 
@@ -35,7 +35,7 @@ func (u *UserRepo) CheckUniqueUserName(username string) (int, error) {
 	query := `SELECT COUNT(*) FROM users WHERE username = $1`
 	rows, err := u.db.Query(query, username)
 	if err != nil {
-		fmt.Println("error is from save user repo function check username")
+		
 		return -1, err
 	}
 	rows.Scan(&count)
@@ -65,5 +65,18 @@ func (u *UserRepo) CheckUniqueEmailID(emailId string) (int, error) {
 	}
 	rows.Scan(&count)
 	return count, nil
+
+}
+
+
+func(u *UserRepo) LogUser(emailid string) (string,error){
+	var password string
+	query:=`SELECT password FROM users WHERE email = $1`
+	err:= u.db.QueryRow(query,emailid).Scan(&password)
+	if err!=nil{
+		return "",err
+	}
+	
+	return password,nil
 
 }

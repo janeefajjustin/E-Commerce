@@ -16,13 +16,22 @@ func main() {
 		panic("db connection failed")
 	}
 	//step 3,4,5,6 : Initialize everything
+
+	//user
 	userrepo := repo.NewUserRepo(DB)
 	userserver := service.NewUserService(userrepo)
-	userhandler:= handler.NewUserHandler(userserver)
+	userhandler := handler.NewUserHandler(userserver)
+
+	//product
+	productrepo:=repo.NewProductRepo(DB)
+	productserver:=service.NewProductService(productrepo)
+	producthandler:=handler.NewProductHandler(productserver)
 
 	//step 7: starting server
 	server := gin.Default()
-	routes.Routes(userhandler,server)
+
+	routes.UserRoutes(userhandler, server)
+	routes.ProductRoutes(producthandler,server)
 	server.Run("localhost:8080")
 	//step 8: gracefulshutdown
 }

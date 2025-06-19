@@ -38,6 +38,20 @@ func CreateTable() {
 	if err != nil {
 		log.Printf("A new error %v", err)
 	}
+
+	createProductCategoryTable :=
+		`CREATE TABLE IF NOT EXISTS product_category(
+	categoryid serial,
+	categoryname varchar(100),
+    createdat timestamp,
+	updatedat timestamp,
+	deletedat timestamp
+	)`
+
+	_, err = DB.Exec(createProductCategoryTable)
+	if err != nil {
+		log.Printf("A new error %v", err)
+	}
 }
 
 func OpenDatabase() error {

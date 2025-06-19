@@ -5,8 +5,10 @@ import (
 	"github.com/janeefajjustin/ecommerce/handler"
 )
 
-func Routes(userhandler *handler.UserHandler, server *gin.Engine) {
+func UserRoutes(userhandler *handler.UserHandler, server *gin.Engine) {
 	// u := handler.UserHandler{}
 	server.POST("/user/signup", userhandler.Signup)
 	server.POST("/user/checkusername/:username", userhandler.CheckUserName)
+	server.POST("/user/login", userhandler.Login)
+
 }
