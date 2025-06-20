@@ -5,10 +5,19 @@ import (
 	"github.com/janeefajjustin/ecommerce/handler"
 )
 
-func ProductRoutes(producthandler handler.ProductHandler, server *gin.Engine) {
+func ProductRoutes(producthandler *handler.ProductHandler, server *gin.Engine) {
 
-	//category model
+	//product category
      server.POST("/product/addcategory",producthandler.PostProductCategory)
-	 server.PUT("/product/updatecategory",producthandler.PostProductCategory)
-	 server.DELETE("/product/deletecategory",producthandler.PostProductCategory)
+	server.PUT("/product/updatecategory/:pid",producthandler.EditProductCategory)
+	server.GET("/product/getcategory",producthandler.GetProductCategory)
+	server.GET("/product/getcategorybyid/:pid",producthandler.GetProductCategoryByID)
+    server.DELETE("/product/deletecategory/:pid",producthandler.DeleteProductCategory)
+
+
+	//product image
+	server.POST("/product/addimage",producthandler.PostProductImage)
+	server.PUT("/product/updateimage/:pid",producthandler.EditProductImage)
+	server.GET("/product/getimagebyid/:pid",producthandler.GetProductImageByID)
+	server.DELETE("/product/deleteimage/:pid",producthandler.DeleteProductImage)
 }

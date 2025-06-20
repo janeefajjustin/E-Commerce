@@ -43,14 +43,36 @@ func CreateTable() {
 		`CREATE TABLE IF NOT EXISTS product_category(
 	categoryid serial,
 	categoryname varchar(100),
-    createdat timestamp,
-	updatedat timestamp,
-	deletedat timestamp
+    createdat timestamp default(null),
+	updatedat timestamp default(null),
+	deletedat timestamp default(null)
 	)`
 
 	_, err = DB.Exec(createProductCategoryTable)
 	if err != nil {
 		log.Printf("A new error %v", err)
+	   
+	}
+
+	createProductImageTable:=
+	`CREATE TABLE IF NOT EXISTS product_image(
+
+    image_id serial,
+
+    product_id integer,
+    image_url varchar(200),
+
+    createdat timestamp default(null),
+
+    updatedat timestamp,
+
+    deletedat timestamp
+
+    )`
+	_, err = DB.Exec(createProductImageTable)
+	if err != nil {
+		log.Printf("A new error %v", err)
+	   
 	}
 }
 
