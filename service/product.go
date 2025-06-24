@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/janeefajjustin/ecommerce/models"
 	"github.com/janeefajjustin/ecommerce/repo"
@@ -16,22 +17,28 @@ func NewProductService(productRepo *repo.ProductRepo) *ProductService {
 }
 
 func (p *ProductService) AddProductcategory(productcategory models.ProductCategory) error {
-	if ! p.productRepo.IsProductCategoryValid(productcategory.CategoryName){
-		return errors.New("categoryname already exists")
+	fmt.Println(productcategory.CategoryName)
+	err:=p.productRepo.ProductCategoryValidation(productcategory.CategoryName)
+	if  err!=nil{
+		return errors.New("categoryname already exists")	
 	}
-	err := p.productRepo.AddProdcategory(productcategory)
+	err = p.productRepo.AddProdcategory(productcategory)
 	if err != nil {
+
 		return err
 	}
 	return nil
 }
 
 func (p *ProductService) ChangeProductcategory(productcategory models.ProductCategory,pid int64) error {
-	if ! p.productRepo.IsProductCategoryIdValid(pid){
-		return errors.New("invalid product id")
+	
+	err:=p.productRepo.ProductCategoryIdValidation(pid)
+	if err!=nil{
+		return err
 	}
-	err := p.productRepo.ChangeProdcategory(productcategory,pid)
+	err = p.productRepo.ChangeProdcategory(productcategory,pid)
 	if err != nil {
+		
 		return err
 	}
 	return nil
@@ -42,9 +49,11 @@ func (p *ProductService) ChangeProductcategory(productcategory models.ProductCat
 func (p *ProductService) GetAllProductCategory() ([]models.ProductCategory,error) {
 	allProductcategories,err := p.productRepo.GetAllProdCategory()
 	if err != nil {
+		//delete
+		fmt.Println(err)
 		return nil,err
 	}
-	return allProductcategories,err
+	return allProductcategories,nil
 }
 
 
@@ -53,14 +62,15 @@ func (p *ProductService) GetProductCategory(pid int64) (*models.ProductCategory,
 	if err != nil {
 		return nil,err
 	}
-	return productcategory,err
+	return productcategory,nil
 }
 
 func (p *ProductService) RemoveProductCategory(pid int64) (error) {
-	if ! p.productRepo.IsProductCategoryIdValid(pid){
-		return errors.New("invalid product id")
+	err:=p.productRepo.ProductCategoryIdValidation(pid)
+	if err!=nil{
+		return err
 	}
-	err := p.productRepo.RemoveProdCategoryByID(pid)
+	err = p.productRepo.RemoveProdCategoryByID(pid)
 	if err != nil {
 		return err
 	}

@@ -37,7 +37,7 @@ func (u *UserService) SignupUser(user models.User) error {
 
 	err = u.CheckEmailID(user.Email)
 	if err != nil {
-		return errors.New("Email ID already exists")
+		return errors.New("email id already exists")
 	}
 
 	err = u.userRepo.SaveUser(user)
