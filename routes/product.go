@@ -20,4 +20,11 @@ func ProductRoutes(producthandler *handler.ProductHandler, server *gin.Engine) {
 	server.PUT("/product/updateimage/:pid",producthandler.EditProductImage)
 	server.GET("/product/getimagebyid/:pid",producthandler.GetProductImageByID)
 	server.DELETE("/product/deleteimage/:pid",producthandler.DeleteProductImage)
+
+	//product size
+	server.POST("/product/addsize",producthandler.PostProductSize)
+	server.PUT("/product/updatesize/:pid",producthandler.EditProductSize)
+	server.GET("/product/getsizebyid/:pid",producthandler.GetProductImageByID)
+	server.DELETE("/product/deletesize/:pid",producthandler.DeleteProductImage)
+
 }

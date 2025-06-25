@@ -17,7 +17,7 @@ func NewProductService(productRepo *repo.ProductRepo) *ProductService {
 }
 
 func (p *ProductService) AddProductcategory(productcategory models.ProductCategory) error {
-	fmt.Println(productcategory.CategoryName)
+
 	err:=p.productRepo.ProductCategoryValidation(productcategory.CategoryName)
 	if  err!=nil{
 		return errors.New("categoryname already exists")	
@@ -113,6 +113,35 @@ func (p *ProductService) RemoveProductImage(pid int64) (error) {
 		return errors.New("invalid product image id")
 	}
 	err := p.productRepo.RemoveProdImageByID(pid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+
+//product size
+
+func (p *ProductService) AddProductSize(productSize models.ProductSize) error {
+
+	err:=p.productRepo.ProductSizeValidation(productSize.Size, productSize.ProductID )
+	if  err!=nil{
+		return errors.New("sizename already exists for this product")	
+	}
+	
+	err = p.productRepo.AddProdSize(productSize)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (p *ProductService) ChangeProductSize(productsize models.ProductSize,pid int64) error {
+	err:=p.productRepo.ProductSizeIdValidation(pid)
+	if err!=nil{
+		return err
+	}
+	err = p.productRepo.ChangeProdSize(productsize,pid)
 	if err != nil {
 		return err
 	}

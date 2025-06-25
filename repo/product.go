@@ -234,3 +234,55 @@ func (p *ProductRepo) RemoveProdImageByID(pid int64) error {
 	}
 	return nil
 }
+
+
+//size
+
+func (p *ProductRepo) AddProdSize(productSize models.ProductSize) error {
+	query := `INSERT INTO product_size (size,product_id,product_quantity,createdat) VALUES ($1,$2,$3,$4)`
+	row := p.db.QueryRow(query,productSize.Size, productSize.ProductID, productSize.ProductQuantity, time.Now())
+	if err := row.Err(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (p *ProductRepo) ProductSizeValidation(size string, productId int64) error {
+	query := `select count(*) from product_size where size=$1 and product_id=$2`
+	row := p.db.QueryRow(query, size, productId)
+	var count int64
+	err := row.Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count >= 1 {
+		return errors.New("count greater than zero")
+	}
+	return nil
+}
+
+func (p *ProductRepo) ChangeProdSize(productsize models.ProductSize, pid int64) error {
+	query := `UPDATE product_size SET size=$1,product_id=$2,product_quantity=$3,updatedat=$4 WHERE size_id=$5;`
+	row := p.db.QueryRow(query, productsize.Size,productsize.ProductID,productsize.ProductQuantity, time.Now(), pid)
+	if err := row.Err(); err != nil {
+
+		return err
+	}
+
+	return nil
+}
+
+func (p *ProductRepo) ProductSizeIdValidation(pid int64) error {
+	var count int64
+	query := `select count(*) from product_size where size_id=$1`
+	row := p.db.QueryRow(query, pid)
+    err:=row.Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count<1{
+		return errors.New("size id invalid")
+	}
+	return nil
+}

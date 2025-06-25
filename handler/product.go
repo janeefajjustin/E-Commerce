@@ -199,3 +199,52 @@ func(p *ProductHandler) DeleteProductImage(context *gin.Context){
 	context.JSON(http.StatusOK, gin.H{"message": "image deleted"})
 
 }
+
+//product size
+
+func(p *ProductHandler) PostProductSize(context *gin.Context){
+
+	var productSize models.ProductSize
+	err:=context.ShouldBindJSON(&productSize)
+	if err!=nil{
+		context.JSON( http.StatusBadRequest,gin.H{"message":"invalid request"} )
+		return
+	}
+
+	
+	err= p.productService.AddProductSize(productSize)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message":"can't add size"})
+		return
+	}
+	
+	context.JSON(http.StatusCreated, gin.H{"message": "new size added successfully"})
+      
+}
+
+
+
+func(p *ProductHandler) EditProductSize(context *gin.Context){
+
+	var productSize models.ProductSize
+	err:=context.ShouldBindJSON(&productSize)
+	if err!=nil{
+		context.JSON( http.StatusBadRequest,gin.H{"message":"invalid request"} )
+		return
+	}
+	pid,err:=strconv.ParseInt(context.Param("pid"),10,64)
+	if err!=nil{
+		context.JSON( http.StatusBadRequest,gin.H{"message":"could not fetch the id"} )
+		return
+	}
+
+	
+	err= p.productService.ChangeProductSize(productSize,pid)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message":"can't edit size"})
+		return
+	}
+	
+	context.JSON(http.StatusOK, gin.H{"message": "size edited successfully"})
+      
+}

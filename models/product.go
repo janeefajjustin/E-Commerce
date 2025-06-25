@@ -7,8 +7,8 @@ type ProductCategory struct{
 	CategoryID int64
 	CategoryName string
 	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
 }
 
 type ProductImage struct{
@@ -22,7 +22,8 @@ type ProductImage struct{
 
 type ProductSize struct{
     SizeID int64
-	ProductPrice float64
+	Size string
+	ProductID int64
 	ProductQuantity int64
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -30,5 +31,10 @@ type ProductSize struct{
 }
 
 type Product struct{
+	ProductName string
+	ProductID int64
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 
 }

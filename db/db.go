@@ -64,12 +64,40 @@ func CreateTable() {
 
     createdat timestamp default(null),
 
-    updatedat timestamp,
+    updatedat timestamp default(null),
 
-    deletedat timestamp
+    deletedat timestamp default(null)
 
     )`
 	_, err = DB.Exec(createProductImageTable)
+	if err != nil {
+		log.Printf("A new error %v", err)
+	   
+	}
+
+	createProductSizeTable:= `CREATE TABLE IF NOT EXISTS product_size(
+size_id serial,
+size varchar(10),
+product_id integer,
+product_quantity integer,
+createdat timestamp default(null),
+updatedat timestamp default(null),
+deletedat timestamp default(null)
+)`
+_, err = DB.Exec(createProductSizeTable)
+	if err != nil {
+		log.Printf("A new error %v", err)
+	   
+	}
+
+	createProductTable:=`CREATE TABLE IF NOT EXISTS product(
+product_id serial,
+  product_name varchar(10),
+  createdat timestamp default(null),
+  updatedat timestamp default(null),
+  deletedat timestamp default(null)
+)`
+_, err = DB.Exec(createProductTable)
 	if err != nil {
 		log.Printf("A new error %v", err)
 	   
@@ -84,9 +112,9 @@ func OpenDatabase() error {
 		return err
 	}
 
-	if err != nil {
-		return err
-	}
+	// if err != nil {
+	// 	return err
+	// }
 
 	DB.SetMaxOpenConns(10)
 	DB.SetMaxIdleConns(5)
