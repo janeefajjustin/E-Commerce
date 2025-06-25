@@ -345,3 +345,89 @@ func (p *ProductRepo) AddProd(product models.Product) error {
 
 	return nil
 }
+
+func (p *ProductRepo) ProductValidation(product_name string) error {
+	query := `select count(*) from product where product_name=$1`
+	row := p.db.QueryRow(query, product_name)
+	var count int64
+	err := row.Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count >= 1 {
+		return errors.New("count greater than zero")
+	}
+	return nil
+}
+
+
+func (p *ProductRepo) ChangeProd(product models.Product, pid int64) error {
+	query := `UPDATE product SET product_name=$1,updatedat=$2 WHERE product_id=$3;`
+	row := p.db.QueryRow(query, product.ProductName, time.Now(), pid)
+	if err := row.Err(); err != nil {
+
+		return err
+	}
+
+	return nil
+}
+
+func (p *ProductRepo) ProductIdValidation(pid int64) error {
+	var count int64
+	query := `select count(*) from product where product_id=$1`
+	row := p.db.QueryRow(query, pid)
+    err:=row.Scan(&count)
+	if err != nil {
+		return err
+	}
+	if count<1{
+		return errors.New("product id invalid")
+	}
+	return nil
+}
+
+
+func (p *ProductRepo) GetProd(pid int64) (*models.Product, error) {
+	query := `SELECT product_id,product_name,createdat,
+	updatedat,deletedat FROM product WHERE product_id=$1`
+
+	var product models.Product
+
+	row := p.db.QueryRow(query, pid)
+	err := row.Scan(
+		&product.ProductID,
+		&product.ProductName,
+		&product.CreatedAt,
+		&product.UpdatedAt,
+		&product.DeletedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return &product, nil
+		}
+		fmt.Println(err)
+		return nil, err
+	}
+	return &product, nil
+}
+
+func (p *ProductRepo) RemoveProd(pid int64) error {
+	query := `UPDATE product
+    SET deletedat=$1
+    WHERE product_id=$2`
+
+	result, err := p.db.Exec(query, time.Now(), pid)
+
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return errors.New("could not delete")
+	}
+	return nil
+}

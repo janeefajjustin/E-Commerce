@@ -29,8 +29,8 @@ func ProductRoutes(producthandler *handler.ProductHandler, server *gin.Engine) {
 
 	//product
 	server.POST("/product/addproduct",producthandler.PostProduct)
-	// server.PUT("/product/updateproduct/:pid",producthandler.EditProduct)
-	// server.GET("/product/getproductbyid/:pid",producthandler.GetProductByID)
-	// server.DELETE("/product/deleteproduct/:pid",producthandler.DeleteProduct)
+	server.PUT("/product/updateproduct/:pid",producthandler.EditProduct)
+	server.GET("/product/getproductbyid/:pid",producthandler.GetProductByID)
+	server.DELETE("/product/deleteproduct/:pid",producthandler.DeleteProduct)
 
 }

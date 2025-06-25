@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 
 type ProductCategory struct{
@@ -31,8 +33,8 @@ type ProductSize struct{
 }
 
 type Product struct{
-	ProductName string
 	ProductID int64
+	ProductName string
 	CreatedAt time.Time
 	UpdatedAt *time.Time
 	DeletedAt *time.Time

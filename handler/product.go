@@ -237,16 +237,12 @@ func(p *ProductHandler) EditProductSize(context *gin.Context){
 		context.JSON( http.StatusBadRequest,gin.H{"message":"could not fetch the id"} )
 		return
 	}
-
-	
 	err= p.productService.ChangeProductSize(productSize,pid)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"message":"can't edit size"})
 		return
 	}
-	
-	context.JSON(http.StatusOK, gin.H{"message": "size edited successfully"})
-      
+	context.JSON(http.StatusOK, gin.H{"message": "size edited successfully"})     
 }
 
 
@@ -309,5 +305,63 @@ func(p *ProductHandler) PostProduct(context *gin.Context){
 	
 	context.JSON(http.StatusCreated, gin.H{"message": "new product added successfully"})
       
+}
+
+func(p *ProductHandler) EditProduct(context *gin.Context){
+
+	var product models.Product
+	err:=context.ShouldBindJSON(&product)
+	if err!=nil{
+		context.JSON( http.StatusBadRequest,gin.H{"message":"invalid request"} )
+		return
+	}
+	pid,err:=strconv.ParseInt(context.Param("pid"),10,64)
+	if err!=nil{
+		context.JSON( http.StatusBadRequest,gin.H{"message":"could not fetch the id"} )
+		return
+	}
+	err= p.productService.ChangeProduct(product,pid)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message":"can't edit product"})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"message": "product edited successfully"})     
+}
+
+func(p *ProductHandler) GetProductByID(context *gin.Context){
+
+	
+	pid,err:=strconv.ParseInt(context.Param("pid"),10,64)
+	if err!=nil{
+		context.JSON( http.StatusBadRequest,gin.H{"message":"could not fetch the id"} )
+		return
+	}
+    var prod *models.Product
+	
+	prod,err= p.productService.GetProduct(pid)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message":"can't get product details"})
+		return
+	}
+	
+	context.JSON(http.StatusOK, gin.H{"message": *prod})
+      
+}
+
+
+func(p *ProductHandler) DeleteProduct(context *gin.Context){
+	pid,err:=strconv.ParseInt(context.Param("pid"),10,64)
+	if err!=nil{
+		context.JSON( http.StatusBadRequest,gin.H{"message":"could not fetch the id"} )
+		return
+	}
+
+	err=p.productService.RemoveProduct(pid)
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message":"can't delete product"})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H{"message": "product deleted"})
+
 }
 
