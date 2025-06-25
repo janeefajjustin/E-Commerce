@@ -147,3 +147,45 @@ func (p *ProductService) ChangeProductSize(productsize models.ProductSize,pid in
 	}
 	return nil
 }
+
+func (p *ProductService) GetProductSize(pid int64) (*models.ProductSize,error) {
+
+	err:=p.productRepo.ProductSizeIdValidation(pid)
+	if err!=nil{
+		return nil,err
+	}
+
+	productsize,err := p.productRepo.GetProdSize(pid)
+	if err != nil {
+		return nil,err
+	}
+	return productsize,err
+}
+
+func (p *ProductService) RemoveProductSize(pid int64) (error) {
+	err:=p.productRepo.ProductSizeIdValidation(pid)
+	if err!=nil{
+		return err
+	}
+	err = p.productRepo.RemoveProdSizeByID(pid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+//product
+
+func (p *ProductService) AddProduct(product models.Product) error {
+
+	// err:=p.productRepo.ProductValidation(product.ProductID )
+	// if  err!=nil{
+	// 	return errors.New("product already exists")	
+	// }
+	
+	err := p.productRepo.AddProd(product)
+	if err != nil {
+		return err
+	}
+	return nil
+}

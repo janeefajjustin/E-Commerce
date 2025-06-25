@@ -216,7 +216,6 @@ func (p *ProductRepo) RemoveProdImageByID(pid int64) error {
 	query := `UPDATE product_image
     SET deletedat=$1
     WHERE image_id=$2`
-	//adding deleted at value
 
 	result, err := p.db.Exec(query, time.Now(), pid)
 
@@ -284,5 +283,65 @@ func (p *ProductRepo) ProductSizeIdValidation(pid int64) error {
 	if count<1{
 		return errors.New("size id invalid")
 	}
+	return nil
+}
+
+
+func (p *ProductRepo) GetProdSize(pid int64) (*models.ProductSize, error) {
+	query := `SELECT size_id,size,product_id,product_quantity,createdat,
+	updatedat,deletedat FROM product_size WHERE size_id=$1`
+
+	var productsize models.ProductSize
+
+	row := p.db.QueryRow(query, pid)
+	err := row.Scan(
+		&productsize.SizeID,
+		&productsize.Size,
+		&productsize.ProductID,
+		&productsize.ProductQuantity,
+		&productsize.CreatedAt,
+		&productsize.UpdatedAt,
+		&productsize.DeletedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return &productsize, nil
+		}
+		return nil, err
+	}
+	return &productsize, nil
+}
+
+
+func (p *ProductRepo) RemoveProdSizeByID(pid int64) error {
+	query := `UPDATE product_size
+    SET deletedat=$1
+    WHERE size_id=$2`
+
+	result, err := p.db.Exec(query, time.Now(), pid)
+
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return errors.New("could not delete")
+	}
+	return nil
+}
+
+//product
+func (p *ProductRepo) AddProd(product models.Product) error {
+	query := `INSERT INTO product (product_name,createdat) VALUES ($1,$2)`
+	row := p.db.QueryRow(query,product.ProductName, time.Now())
+	if err := row.Err(); err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	return nil
 }

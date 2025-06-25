@@ -92,7 +92,7 @@ _, err = DB.Exec(createProductSizeTable)
 
 	createProductTable:=`CREATE TABLE IF NOT EXISTS product(
 product_id serial,
-  product_name varchar(10),
+  product_name varchar(100),
   createdat timestamp default(null),
   updatedat timestamp default(null),
   deletedat timestamp default(null)

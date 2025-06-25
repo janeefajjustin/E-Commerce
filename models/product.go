@@ -16,8 +16,8 @@ type ProductImage struct{
 	ProductID int64
 	ImageURL string
 	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
 }
 
 type ProductSize struct{
@@ -26,15 +26,15 @@ type ProductSize struct{
 	ProductID int64
 	ProductQuantity int64
 	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
 }
 
 type Product struct{
 	ProductName string
 	ProductID int64
 	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
+	UpdatedAt *time.Time
+	DeletedAt *time.Time
 
 }
