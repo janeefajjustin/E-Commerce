@@ -1,10 +1,10 @@
-package repo
+package user
 
 import (
 	"database/sql"
 	
 
-	"github.com/janeefajjustin/ecommerce/models"
+	"github.com/janeefajjustin/ecommerce/internal/models"
 )
 
 type UserRepo struct {

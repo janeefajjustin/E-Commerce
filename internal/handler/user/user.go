@@ -1,19 +1,19 @@
-package handler
+package user
 
 import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/janeefajjustin/ecommerce/models"
-	"github.com/janeefajjustin/ecommerce/service"
+	"github.com/janeefajjustin/ecommerce/internal/models"
+	"github.com/janeefajjustin/ecommerce/internal/service/user"
 	"github.com/janeefajjustin/ecommerce/utils"
 )
 
 type UserHandler struct {
-	userService *service.UserService
+	userService *user.UserService
 }
 
-func NewUserHandler(userService *service.UserService) *UserHandler {
+func NewUserHandler(userService *user.UserService) *UserHandler {
 	return &UserHandler{userService: userService}
 }
 

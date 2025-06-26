@@ -1,4 +1,4 @@
-package repo
+package product
 
 import (
 	"database/sql"
@@ -6,8 +6,8 @@ import (
 	"fmt"
 
 	"time"
-
-	"github.com/janeefajjustin/ecommerce/models"
+	"github.com/janeefajjustin/ecommerce/internal/models"
+      
 )
 
 type ProductRepo struct {

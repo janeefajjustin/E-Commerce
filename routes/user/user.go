@@ -1,11 +1,11 @@
-package routes
+package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/janeefajjustin/ecommerce/handler"
+	"github.com/janeefajjustin/ecommerce/internal/handler/user"
 )
 
-func UserRoutes(userhandler *handler.UserHandler, server *gin.Engine) {
+func UserRoutes(userhandler *user.UserHandler, server *gin.Engine) {
 	// u := handler.UserHandler{}
 	server.POST("/user/signup", userhandler.Signup)
 	server.POST("/user/checkusername/:username", userhandler.CheckUserName)
