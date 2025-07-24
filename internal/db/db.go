@@ -102,6 +102,30 @@ _, err = DB.Exec(createProductTable)
 		log.Printf("A new error %v", err)
 	   
 	}
+
+	createCartTable:= `CREATE TABLE IF NOT EXISTS cart(
+	cart_id serial,
+	user_id int,
+	total_amount float,
+	no_of_product int
+)`
+
+	_,err=DB.Exec(createCartTable)
+	if err!=nil{
+		log.Printf("A new error %v",err)
+	}
+
+	createCartItemTable:= `CREATE TABLE IF NOT EXISTS cart_item(
+	product_id int,
+	quantity int,
+	cart_id int,
+	price float
+)`
+
+	_,err=DB.Exec(createCartItemTable)
+	if err!=nil{
+		log.Printf("A new error %v",err)
+	}
 }
 
 func OpenDatabase() error {

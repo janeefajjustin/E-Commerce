@@ -1,4 +1,4 @@
-package product
+package productHandler
 
 import (
 	"net/http"
@@ -6,14 +6,14 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/janeefajjustin/ecommerce/internal/models"
-	"github.com/janeefajjustin/ecommerce/internal/service/product"
+	"github.com/janeefajjustin/ecommerce/internal/service/productService"
 )
 
 type ProductHandler struct {
-	productService *product.ProductService
+	productService *productService.ProductService
 }
 
-func NewProductHandler(productService *product.ProductService) *ProductHandler{
+func NewProductHandler(productService *productService.ProductService) *ProductHandler{
 	return &ProductHandler{productService: productService}
 }
 

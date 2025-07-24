@@ -1,18 +1,18 @@
-package product
+package productService
 
 import (
 	"errors"
 	"fmt"
 
 	"github.com/janeefajjustin/ecommerce/internal/models"
-	"github.com/janeefajjustin/ecommerce/internal/repo/product"
+	"github.com/janeefajjustin/ecommerce/internal/repo/productRepo"
 )
 
 type ProductService struct {
-	productRepo *product.ProductRepo
+	productRepo *productRepo.ProductRepo
 }
 
-func NewProductService(productRepo *product.ProductRepo) *ProductService {
+func NewProductService(productRepo *productRepo.ProductRepo) *ProductService {
 	return &ProductService{productRepo: productRepo}
 }
 

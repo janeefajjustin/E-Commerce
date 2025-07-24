@@ -1,19 +1,18 @@
-package user
+package userService
 
 import (
 	"errors"
-	
 
 	"github.com/janeefajjustin/ecommerce/internal/models"
-	"github.com/janeefajjustin/ecommerce/internal/repo/user"
+	"github.com/janeefajjustin/ecommerce/internal/repo/userRepo"
 	"github.com/janeefajjustin/ecommerce/utils"
 )
 
 type UserService struct {
-	userRepo *user.UserRepo
+	userRepo *userRepo.UserRepo
 }
 
-func NewUserService(userRepo *user.UserRepo) *UserService {
+func NewUserService(userRepo *userRepo.UserRepo) *UserService {
 	return &UserService{userRepo: userRepo}
 }
 

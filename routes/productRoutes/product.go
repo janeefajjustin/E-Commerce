@@ -1,11 +1,11 @@
-package product
+package productRoutes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/janeefajjustin/ecommerce/internal/handler/product"
+	"github.com/janeefajjustin/ecommerce/internal/handler/productHandler"
 )
 
-func ProductRoutes(producthandler *product.ProductHandler, server *gin.Engine) {
+func ProductRoutes(producthandler *productHandler.ProductHandler, server *gin.Engine) {
 
 	//product category
      server.POST("/product/addcategory",producthandler.PostProductCategory)
